@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { AuthModalProvider } from '@/components/auth/auth-modal-provider'
 
 interface Article {
   id: string
@@ -56,8 +57,10 @@ export default function PressPage() {
   }
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-white mb-2">Presse</h1>
+    <>
+      <AuthModalProvider />
+      <div className="py-8 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-white mb-2">Presse</h1>
       <p className="text-slate-400 mb-8">Les dernières actualités du Cameroun et du monde</p>
 
       {/* Category Filter */}
@@ -152,5 +155,6 @@ export default function PressPage() {
         </div>
       )}
     </div>
+      </>
   )
 }

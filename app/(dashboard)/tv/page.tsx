@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { VideoPlayer } from '@/components/media/video-player'
+import { AuthModalProvider } from '@/components/auth/auth-modal-provider'
 
 interface TVStream {
   id: string
@@ -47,11 +48,13 @@ export default function TVPage() {
   }
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-white mb-2">Télévision</h1>
-      <p className="text-slate-400 mb-8">Regardez les chaînes de télévision camerounaises en direct</p>
+    <>
+      <AuthModalProvider />
+      <div className="py-8 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-white mb-2">Télévision</h1>
+        <p className="text-slate-400 mb-8">Regardez les chaînes de télévision camerounaises en direct</p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Player */}
         <div className="lg:col-span-3">
           {selectedStream && (
@@ -91,5 +94,6 @@ export default function TVPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

@@ -1,8 +1,8 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Metadata } from 'next'
 import { RadioPlayer } from '@/components/media/radio-player'
+import { AuthModalProvider } from '@/components/auth/auth-modal-provider'
 
 interface RadioStream {
   id: string
@@ -47,11 +47,13 @@ export default function RadioPage() {
   }
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8">
-      <h1 className="text-3xl font-bold text-white mb-2">Radios</h1>
-      <p className="text-slate-400 mb-8">Écoutez les stations radio camerounaises en direct</p>
+    <>
+      <AuthModalProvider />
+      <div className="py-8 px-4 sm:px-6 lg:px-8">
+        <h1 className="text-3xl font-bold text-white mb-2">Radios</h1>
+        <p className="text-slate-400 mb-8">Écoutez les stations radio camerounaises en direct</p>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Player */}
         <div className="lg:col-span-2">
           {selectedStream && (
@@ -90,5 +92,6 @@ export default function RadioPage() {
         </div>
       </div>
     </div>
+    </>
   )
 }

@@ -24,12 +24,21 @@ export function Navbar({ session }: NavbarProps) {
     <nav className="bg-slate-900 border-b border-slate-800 sticky top-0 z-40">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
-              N
-            </div>
-            <div className="text-2xl font-bold text-blue-500">Nkoh</div>
-          </Link>
+          <div className="flex items-center gap-8">
+            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
+                N
+              </div>
+              <div className="text-2xl font-bold text-blue-500">Nkoh</div>
+            </Link>
+
+            <Link 
+              href="/" 
+              className="text-slate-300 hover:text-white text-sm font-medium transition-colors flex items-center gap-1"
+            >
+              ← Accueil
+            </Link>
+          </div>
 
           <div className="flex items-center gap-8">
             <div className="hidden md:flex gap-1">
