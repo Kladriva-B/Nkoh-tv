@@ -14,16 +14,28 @@ export function RadioPlayer({ title, streamUrl, description }: RadioPlayerProps)
   const [volume, setVolume] = useState(1)
   const [duration, setDuration] = useState(0)
   const [currentTime, setCurrentTime] = useState(0)
+  const [error, setError] = useState<string | null>(null)
 
   const handlePlayPause = () => {
     if (audioRef.current) {
       if (isPlaying) {
         audioRef.current.pause()
       } else {
-        audioRef.current.play()
+        const playPromise = audioRef.current.play()
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            setError('Impossible de lire le flux audio')
+            setIsPlaying(false)
+          })
+        }
       }
       setIsPlaying(!isPlaying)
     }
+  }
+
+  const handleError = () => {
+    setError('Source audio non disponible')
+    setIsPlaying(false)
   }
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,11 +75,18 @@ export function RadioPlayer({ title, streamUrl, description }: RadioPlayerProps)
         ref={audioRef}
         src={streamUrl}
         onEnded={() => setIsPlaying(false)}
+        onError={handleError}
         crossOrigin="anonymous"
       />
 
       <h3 className="text-xl font-semibold text-white mb-2">{title}</h3>
       {description && <p className="text-slate-400 text-sm mb-4">{description}</p>}
+      
+      {error && (
+        <div className="mb-4 p-3 bg-amber-900/30 border border-amber-700 rounded text-amber-200 text-sm">
+          {error}
+        </div>
+      )}
 
       <div className="space-y-4">
         <button

@@ -16,16 +16,28 @@ export function VideoPlayer({ title, streamUrl, description, currentShow }: Vide
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
   const [isFullscreen, setIsFullscreen] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handlePlayPause = () => {
     if (videoRef.current) {
       if (isPlaying) {
         videoRef.current.pause()
       } else {
-        videoRef.current.play()
+        const playPromise = videoRef.current.play()
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            setError('Impossible de lire le flux vidéo')
+            setIsPlaying(false)
+          })
+        }
       }
       setIsPlaying(!isPlaying)
     }
+  }
+
+  const handleError = () => {
+    setError('Source vidéo non disponible')
+    setIsPlaying(false)
   }
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,8 +95,18 @@ export function VideoPlayer({ title, streamUrl, description, currentShow }: Vide
           src={streamUrl}
           className="w-full h-full"
           onEnded={() => setIsPlaying(false)}
+          onError={handleError}
           crossOrigin="anonymous"
         />
+        
+        {error && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/70 rounded">
+            <div className="text-center">
+              <p className="text-amber-200 text-sm mb-2">Erreur de lecture</p>
+              <p className="text-slate-400 text-xs">{error}</p>
+            </div>
+          </div>
+        )}
 
         {/* Overlay Controls */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity flex flex-col justify-between p-4">
