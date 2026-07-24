@@ -1,11 +1,8 @@
 import type { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { prisma } from './prisma';
 import { getUserByEmail, verifyPassword } from './auth';
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
       name: 'Credentials',
@@ -18,33 +15,38 @@ export const authOptions: NextAuthOptions = {
           throw new Error('Invalid credentials');
         }
 
-        const user = await getUserByEmail(credentials.email);
-        if (!user) {
-          throw new Error('No user found with this email');
+        try {
+          const user = await getUserByEmail(credentials.email);
+          if (!user) {
+            throw new Error('No user found with this email');
+          }
+
+          const isPasswordValid = await verifyPassword(
+            credentials.password,
+            user.password
+          );
+
+          if (!isPasswordValid) {
+            throw new Error('Invalid password');
+          }
+
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            image: user.avatar,
+            role: user.role,
+          };
+        } catch (error) {
+          console.error('Auth error:', error);
+          throw new Error('Authentication failed');
         }
-
-        const isPasswordValid = await verifyPassword(
-          credentials.password,
-          user.password
-        );
-
-        if (!isPasswordValid) {
-          throw new Error('Invalid password');
-        }
-
-        return {
-          id: user.id,
-          email: user.email,
-          name: user.name,
-          image: user.avatar,
-          role: user.role,
-        };
       },
     }),
   ],
   pages: {
-    signIn: '/auth/signin',
-    error: '/auth/error',
+    signIn: '/signin',
+    error: '/signin',
   },
   callbacks: {
     async jwt({ token, user }) {
