@@ -1,0 +1,142 @@
+{
+  "project": "Nkoh - Cameroon Streaming Platform",
+  "version": "1.0.0",
+  "description": "Full-stack Next.js 16 streaming platform for radio, TV, and press content",
+  "tech_stack": {
+    "frontend": ["Next.js 16", "React 19.2", "TypeScript 5.7", "Tailwind CSS 4"],
+    "backend": ["Next.js API Routes", "Node.js"],
+    "authentication": ["NextAuth.js", "bcryptjs"],
+    "database": ["Prisma ORM 6", "PostgreSQL"],
+    "ui_components": ["shadcn/ui", "Radix UI"],
+    "media": ["React Player", "HLS.js", "DASH.js"],
+    "api": ["HTTP REST", "JSON"]
+  },
+  "directory_structure": {
+    "app": {
+      "description": "Next.js App Router pages and routes",
+      "subdirectories": {
+        "(auth)": "Authentication pages (signin, signup)",
+        "(dashboard)": "User dashboard (radio, TV, press, home)",
+        "(admin)": "Admin supervision dashboard",
+        "api": "API routes and endpoints"
+      }
+    },
+    "components": {
+      "description": "Reusable React components",
+      "subdirectories": {
+        "ui": "Base UI components (Button, Dialog)",
+        "navigation": "Navigation components (Navbar)",
+        "auth": "Auth modals and providers",
+        "media": "Media players (Radio, Video)"
+      }
+    },
+    "lib": {
+      "description": "Utilities and configurations",
+      "files": {
+        "prisma.ts": "Prisma client singleton",
+        "auth.ts": "Authentication utilities",
+        "auth-config.ts": "NextAuth.js configuration",
+        "api-response.ts": "Standardized API responses",
+        "utils.ts": "General utilities"
+      }
+    },
+    "prisma": {
+      "description": "Database configuration",
+      "files": {
+        "schema.prisma": "Database schema with 13 tables"
+      }
+    }
+  },
+  "key_features": [
+    "Public landing page with modal-based authentication",
+    "Radio streaming with live player",
+    "TV streaming with video player",
+    "Press/News feed with categories",
+    "Admin supervision dashboard",
+    "User authentication and session management",
+    "Responsive design for desktop and mobile",
+    "Multi-language support (French)"
+  ],
+  "routes": {
+    "public": [
+      "/",
+      "/radio",
+      "/tv",
+      "/press"
+    ],
+    "authentication": [
+      "/signin",
+      "/signup"
+    ],
+    "protected": [
+      "/dashboard",
+      "/admin"
+    ],
+    "api": [
+      "/api/auth/[...nextauth]",
+      "/api/auth/register",
+      "/api/streams/radio",
+      "/api/streams/tv",
+      "/api/articles"
+    ]
+  },
+  "database_schema": {
+    "tables": [
+      "User",
+      "Account",
+      "Session",
+      "Channel",
+      "Show",
+      "Stream",
+      "Episode",
+      "Article",
+      "Favorite",
+      "PlaybackHistory",
+      "Subscription",
+      "Notification",
+      "Comment"
+    ]
+  },
+  "authentication": {
+    "provider": "NextAuth.js",
+    "strategy": "Credentials (email/password)",
+    "session_type": "JWT",
+    "roles": ["USER", "MODERATOR", "ADMIN"]
+  },
+  "components_breakdown": {
+    "ui_components": 2,
+    "page_components": 8,
+    "layout_components": 3,
+    "media_components": 2,
+    "auth_components": 3,
+    "navigation_components": 1
+  },
+  "api_endpoints": {
+    "authentication": [
+      "POST /api/auth/register - User registration",
+      "POST /api/auth/[...nextauth] - NextAuth callbacks"
+    ],
+    "streams": [
+      "GET /api/streams/radio - Fetch radio stations",
+      "GET /api/streams/tv - Fetch TV channels"
+    ],
+    "content": [
+      "GET /api/articles - Fetch articles with filtering"
+    ]
+  },
+  "environment_variables": [
+    "DATABASE_URL",
+    "NEXTAUTH_URL",
+    "NEXTAUTH_SECRET",
+    "SESSION_MAX_AGE"
+  ],
+  "file_count": {
+    "total": 38,
+    "tsx": 19,
+    "ts": 9,
+    "json": 3,
+    "md": 4,
+    "other": 3
+  },
+  "total_lines_of_code": "7000+"
+}
