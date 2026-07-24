@@ -3,8 +3,10 @@
 import { signOut } from 'next-auth/react'
 import type { Session } from 'next-auth'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { Button } from '@/components/ui/button'
+import { ThemeToggle } from '@/components/theme/theme-toggle'
 
 const navItems = [
   { href: '/dashboard', label: 'Accueil', icon: '🏠' },
@@ -25,11 +27,15 @@ export function Navbar({ session }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center gap-8">
-            <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
-                N
-              </div>
-              <div className="text-2xl font-bold text-blue-500">Nkoh</div>
+            <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+              <Image 
+                src="/nkoh-logo.svg" 
+                alt="Nkoh Logo" 
+                width={40} 
+                height={40}
+                priority
+                className="w-10 h-10"
+              />
             </Link>
 
             <Link 
@@ -59,6 +65,8 @@ export function Navbar({ session }: NavbarProps) {
             </div>
 
             <div className="flex items-center gap-4">
+              <ThemeToggle />
+              
               {session?.user ? (
                 <>
                   <div className="text-sm text-slate-300">

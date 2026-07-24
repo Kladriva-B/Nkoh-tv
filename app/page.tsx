@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react'
 import { useSession } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { SignInModal } from '@/components/auth/signin-modal'
 import { SignUpModal } from '@/components/auth/signup-modal'
+import { ThemeToggle } from '@/components/theme/theme-toggle'
 
 export default function Page() {
   const { data: session } = useSession()
@@ -24,20 +26,26 @@ export default function Page() {
   }, [searchParams])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950">
+    <div className="min-h-screen bg-gradient-to-br from-white via-blue-50 to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 transition-colors">
       {/* Navigation */}
-      <nav className="border-b border-slate-800 backdrop-blur-sm sticky top-0 z-40">
+      <nav className="border-b border-slate-200 dark:border-slate-800 backdrop-blur-sm sticky top-0 z-40 bg-white/80 dark:bg-slate-900/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-bold">
-              N
-            </div>
-            <span className="text-xl font-bold text-white">Nkoh</span>
+          <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
+            <Image 
+              src="/nkoh-logo.svg" 
+              alt="Nkoh Logo" 
+              width={40} 
+              height={40}
+              priority
+              className="w-10 h-10"
+            />
           </Link>
           <div className="flex items-center gap-4">
+            <ThemeToggle />
+            
             {session ? (
               <>
-                <span className="text-sm text-slate-300">{session.user?.email}</span>
+                <span className="text-sm text-slate-600 dark:text-slate-300">{session.user?.email}</span>
                 <Link href="/dashboard">
                   <Button className="bg-blue-600 hover:bg-blue-700">Aller au tableau de bord</Button>
                 </Link>
@@ -47,7 +55,7 @@ export default function Page() {
                 <Button 
                   variant="ghost" 
                   onClick={() => setSignInOpen(true)}
-                  className="text-slate-300 hover:text-white"
+                  className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white"
                 >
                   Se connecter
                 </Button>
@@ -70,10 +78,10 @@ export default function Page() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 text-balance">
+            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white mb-6 text-balance">
               Streaming Radio et TV du Cameroun
             </h1>
-            <p className="text-xl text-slate-400 mb-8 text-balance">
+            <p className="text-xl text-slate-600 dark:text-slate-400 mb-8 text-balance">
               Écoutez vos radios préférées, regardez la télévision en direct, et découvrez l&apos;actualité camerounaise en un seul endroit.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">

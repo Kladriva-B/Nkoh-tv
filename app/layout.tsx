@@ -1,6 +1,7 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import Providers from '@/components/providers'
+import { ThemeInitScript } from '@/components/theme/theme-init-script'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -40,8 +41,11 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <ThemeInitScript />
+      </head>
+      <body className="antialiased bg-white dark:bg-slate-950 text-slate-900 dark:text-slate-50 transition-colors">
         <Providers>
           {children}
         </Providers>
